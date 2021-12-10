@@ -12,7 +12,7 @@ import vacByCountydata from '../controllers/vacByCountyController.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('Welcome to the UMD Dining API!');
+    res.send('Welcome to the UMD Dining API!');
 });
 
 /// /////////////////////////////////
@@ -51,8 +51,6 @@ router.route('/covid-stats')
     }
   })
   .post(async(req, res) => {
-    const cStatsTable = await db.covidStatsCustom.findAll();
-    const currentId = (await cStatsTable.length) + 1;
     try {
       const addCovidStats = await db.covidStatsCustom.create({
         county_ID: currentId,
@@ -91,7 +89,8 @@ router.route('/vacByCountyController')
         {
           type: sequelize.QueryTypes.SELECT
         });
-      console.log('Reached /vacByCounty endpoint with GET')
+      console.log('Reached /vacByCounty endpoint with GET');
+      res.json(databaseResponse);
     } catch (err) {
       console.log(error);
       res.json({ error: 'Something went wrong' });
@@ -226,24 +225,21 @@ router.route('/vaccine-site-info')
       res.json({ error: 'Something went wrong' });
     }
   });
+  
 /// /////////////////////////////////
 /// ////County Info Endpoint////////
 /// /////////////////////////////////
 router.route('/county-info')
   .get(async(req, res) => {
     try {
-      const dbResponse = await db.sequelizeDB.query(countyInfo,
-        {
-          type: sequelize.QueryTypes.SELECT
-        });
-      res.json(dbResponse);
-      console.log('Touched /county-info with GET');
+      res.json({ message: "Touched /county-info with GET" });
+      console.log("Touched /county-info with GET");
     } catch (err) {
       console.log(error);
       res.json({ error: 'Something went wrong' });
     }
   })
-// put request
+//put request
   .put(async(req, res) => {
     try {
       await db.County.update(
@@ -266,26 +262,18 @@ router.route('/county-info')
     }
   })
 
-// post request
+//post request
   .post(async(req, res) => {
-    const countyInfoTable = await db.County.findAll();
-    const currentID = await countyInfoTable.length + 1;
     try {
-      const addCounty = await db.County.create({
-        county_ID: currentID,
-        county: req.body.county,
-        population: req.body.population,
-        population_density: req.body.population_density
-      });
-      res.json(addCounty);
-      console.log('Touched /county-info with POST');
+      res.json({ message: "Touched /county-info with POST" });
+      console.log("Touched /county-info with POST");
     } catch (err) {
       console.log(error);
       res.json({ error: 'Something went wrong' });
     }
   })
 
-// delete request
+//delete request
   .delete(async(req, res) => {
     try {
       await db.County.destroy({
@@ -307,8 +295,8 @@ router.route('/county-info')
 router.route('/unemployment')
   .get(async(req, res) => {
     try {
-      res.json({ message: 'Touched /unemployment with GET' });
-      console.log('Touched /unemployment with GET');
+      res.json({ message: "Touched /unemployment with GET" });
+      console.log("Touched /unemployment with GET");
     } catch (err) {
       console.log(error);
       res.json({ error: 'Something went wrong' });
@@ -316,8 +304,8 @@ router.route('/unemployment')
   })
   .put((req, res) => {
     try {
-      res.json({ message: 'Touched /unemployment with PUT' });
-      console.log('Touched /unemployment with PUT');
+      res.json({ message: "Touched /unemployment with PUT" });
+      console.log("Touched /unemployment with PUT");
     } catch (err) {
       console.log(error);
       res.json({ error: 'Something went wrong' });
@@ -325,8 +313,8 @@ router.route('/unemployment')
   })
   .post((req, res) => {
     try {
-      res.json({ message: 'Touched /unemployment with POST' });
-      console.log('Touched /unemployment with POST');
+      res.json({ message: "Touched /unemployment with POST" });
+      console.log("Touched /unemployment with POST");
     } catch (err) {
       console.log(error);
       res.json({ error: 'Something went wrong' });
@@ -334,8 +322,8 @@ router.route('/unemployment')
   })
   .delete((req, res) => {
     try {
-      res.json({ message: 'Touched /unemployment with DELETE' });
-      console.log('Touched /unemployment with DELETE');
+      res.json({ message: "Touched /unemployment with DELETE" });
+      console.log("Touched /unemployment with DELETE");
     } catch (err) {
       console.log(error);
       res.json({ error: 'Something went wrong' });
